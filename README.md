@@ -1,97 +1,86 @@
-# Real-time Financial Data Processing Pipeline
+# 📈 Market Data Streaming
 
-This project demonstrates a real-time financial data processing pipeline using Apache Kafka, Apache Spark, MySQL, and Grafana, all orchestrated with Docker. The pipeline fetches stock data from the Financial Modeling Prep API, processes it using Spark, stores the processed data in MySQL, and visualises it using Grafana.
+Pipeline complet de traitement et de visualisation de données boursières en temps réel, construit avec **Apache Kafka**, **Apache Spark Streaming**, **MySQL**, **Grafana** et orchestré via **Docker**.
 
-## Project Objectives
+---
 
-- Set up a real-time data ingestion system using Apache Kafka
-- Process streaming data in real-time using Apache Spark
-- Store processed data in a MySQL database
-- Visualise the processed data using Grafana
-- Orchestrate the entire pipeline using Docker
+## 🧠 Objectif
 
-## Project Architecture
+Ce projet simule un système de surveillance des marchés financiers en temps réel, depuis l'ingestion de flux boursiers jusqu’à la visualisation dynamique. Il est conçu comme une architecture réutilisable dans des cas réels : finance, détection d’anomalies, monitoring applicatif.
 
-The project consists of the following components:
+---
 
-- Kafka Producer: A Python script that fetches real-time stock data from the Financial Modeling Prep API and publishes it to a Kafka topic.
-- Kafka: A distributed streaming platform that ingests real-time data from the Kafka Producer and makes it available for processing.
-- Spark: A distributed computing system that consumes data from Kafka, processes it in real-time, and stores the processed data in a MySQL database.
-- MySQL: A relational database management system used to store the processed stock data.
-- Grafana: An open-source platform for data visualization and monitoring, used to create dashboards and visualise the processed stock data.
+## ⚙️ Architecture technique
 
-The project uses `requirements.txt` files to manage the Python dependencies for the Kafka producer and Spark processing scripts. The dependencies are installed within the respective Docker containers during the build process.
+API REST (ex: données boursières) → Kafka → Spark Streaming → MySQL → Grafana  
+Toutes les briques sont déployées avec Docker.
 
+---
 
-## Prerequisites
+## 🛠️ Stack utilisée
 
-- Python (version 3.12)
-- Docker: Install Docker and Docker Compose on your machine.
-- Financial Modeling Prep API Key: Sign up for a free API key at [Financial Modeling Prep](https://site.financialmodelingprep.com/).
+- **Kafka** – Ingestion des flux en temps réel  
+- **Spark Streaming** – Traitement des données avec agrégation  
+- **MySQL** – Stockage des données structurées  
+- **Grafana** – Visualisation dynamique et monitoring  
+- **Docker Compose** – Orchestration multi-conteneurs  
+- **Python** – Producteur de messages Kafka (API simulée)
 
-## Setup Instructions
+---
 
-1. Clone the project repository:
-   ```
-   git clone https://github.com/hawa1222/real-time-data-processing.git
-   ```
+## 🚀 Lancement du projet
 
-2. Navigate to the project directory:
-   ```
-   cd real-time-data-processing
-   ```
+1. **Cloner le dépôt**
 
-3. Set up your environment:
+   `git clone https://github.com/Yamine-coder/market-data-streaming.git`
 
-   Make the setup script executable (if it's not already):
+2. **Lancer l’environnement complet**
 
-   ```
-   chmod +x setup_environment.sh
-   ```
+   `docker-compose up --build`
 
-   Then run the `setup_environment.sh` script to create a virtual environment and install all necessary packages. Execute this script from the root directory of the project:
+3. **Accéder aux services**
 
-   ```
-   ./setup_environment.sh
-   ```
+- Spark UI : `http://localhost:4040`  
+- Grafana : `http://localhost:3000` (login : admin / admin)  
+- MySQL : port `3306` (stockage des données boursières)
 
-4. Create a `.env` file in the project root directory and provide the environment variables as specified in `.env_template`.
+---
 
-## Usage
+## 📊 Aperçu du Dashboard Grafana
 
+![Dashboard Grafana](./images/grafana-preview.png)
 
-1. Build and run the Docker containers:
-   ```
-   docker-compose up --build
-   ```
+> Visualisation en temps réel des indicateurs de marché (prix, variation, volume...).
 
-   - This command will build the Docker images and start the containers for each service (Kafka, Spark, MySQL, and Grafana).
+---
 
-   If you wish to run the Spark and Kafka Python scripts individually without using Docker, activate the virtual environment created by setup_environment.sh, run zookeeper & kafka locally, and run the scripts from the command line.
+## 📂 Contenu du dépôt
 
-   - For Kafka:
-     ```
-     python kafka/kafka_producer.py
-     ```
+- `producer/` → Producteur Kafka en Python
+- `spark/` → Script Spark Streaming pour traitement des flux
+- `grafana/` → Fichiers de configuration Grafana
+- `mysql/` → Init de la base de données
+- `docker-compose.yml` → Orchestration des services
+- `README.md`
 
-   - For Spark:
-     ```
-     python spark/process_data.py
-     ```
+---
 
-2. Access the Grafana dashboard:
+## 💼 Cas d’usage métier
 
-   Open your web browser and visit [http://localhost:3000](http://localhost:3000/). Log in using the admin credentials you provided in the `.env` file.
+- 🔍 Surveillance temps réel des données de marché
+- 📈 Détection d’anomalies sur les cours boursiers
+- ⚙️ Modèle d’architecture pour projets Data/IA/DevOps temps réel
 
-   - The MySQL data source should be automatically configured based on the `datasource.yml` file.
-   - The default dashboard for visualising stock data should be imported automatically based on the `stock_data_dashboard.json` file.
+---
 
+## 👤 Auteur
 
-## Additional Configuration
+**Yamine Moussaoui**  
+Consultant en Solutions Data & IA  
+🔗 [GitHub](https://github.com/Yamine-coder) · [LinkedIn](https://www.linkedin.com/in/yamine-moussaoui-672a25205/)
 
-- Update the `.env` file root directory to change the MySQL connection details if required.
-- Customise the `stock_data_dashboard.json` file in the `grafana/` directory to modify the default Grafana dashboard.
+---
 
-## License
+## 🪪 Licence
 
-This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
+Projet open source sous licence MIT — libre d’utilisation et de modification.
